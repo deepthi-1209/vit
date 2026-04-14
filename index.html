@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>EduSense Classroom</title>
+
+<style>
+
+body{
+font-family:Segoe UI;
+margin:0;
+background:#f2f4f7;
+}
+
+header{
+background:#2c3e50;
+color:white;
+padding:20px;
+text-align:center;
+}
+
+nav{
+text-align:center;
+margin:20px;
+}
+
+button{
+padding:10px 20px;
+border:none;
+background:#3498db;
+color:white;
+border-radius:5px;
+cursor:pointer;
+margin:5px;
+}
+
+section{
+display:none;
+padding:30px;
+}
+
+.active{
+display:block;
+}
+
+.card{
+background:white;
+padding:20px;
+margin:15px;
+border-radius:10px;
+box-shadow:0px 4px 10px rgba(0,0,0,0.1);
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+}
+
+.metric{
+font-size:30px;
+font-weight:bold;
+color:#2980b9;
+}
+
+input{
+padding:10px;
+margin:5px;
+width:250px;
+}
+
+textarea{
+width:100%;
+height:80px;
+}
+
+</style>
+
+<script>
+
+function showPage(page){
+
+var sections=document.querySelectorAll("section");
+sections.forEach(s=>s.classList.remove("active"));
+
+document.getElementById(page).classList.add("active");
+
+}
+
+function login(){
+
+var name=document.getElementById("username").value;
+
+if(name==""){
+alert("Enter your name");
+}
+else{
+showPage("classroom");
+}
+
+}
+
+function joinClass(){
+showPage("home");
+}
+
+function startDetection(){
+
+navigator.mediaDevices.getUserMedia({video:true})
+.then(function(stream){
+document.getElementById("video").srcObject = stream;
+});
+
+var emotions = [
+"😊 Focused",
+"😐 Confused",
+"😴 Bored",
+"🤔 Thinking",
+"😃 Engaged"
+];
+
+setInterval(function(){
+
+var randomEmotion = emotions[Math.floor(Math.random()*emotions.length)];
+
+document.getElementById("emotionResult").innerHTML =
+"AI Detected Emotion: " + randomEmotion;
+
+},3000);
+
+}
+
+</script>
+
+</head>
+
+<body onload="showPage('login')">
+
+<header>
+
+<h1>EduSense Classroom</h1>
+<p>Smart Digital Learning Platform</p>
+
+</header>
+
+<!-- LOGIN -->
+
+<section id="login">
+
+<div class="card">
+
+<h2>Login to Classroom</h2>
+
+<input id="username" placeholder="Enter your name">
+
+<br><br>
+
+<button onclick="login()">Login</button>
+
+</div>
+
+</section>
+
+<!-- JOIN CLASS -->
+
+<section id="classroom">
+
+<div class="card">
+
+<h2>Join Classroom</h2>
+
+<p>Course: Database Management Systems</p>
+
+<p>Faculty: Dr. Kumar</p>
+
+<button onclick="joinClass()">Join Class</button>
+
+</div>
+
+</section>
+
+<!-- DASHBOARD NAVIGATION -->
+
+<section id="home">
+
+<nav>
+
+<button onclick="showPage('home')">Home</button>
+<button onclick="showPage('student')">Student Dashboard</button>
+<button onclick="showPage('teacher')">Teacher Dashboard</button>
+<button onclick="showPage('ai')">AI Emotion Insights</button>
+
+</nav>
+
+<h2>EduSense – Emotion Aware Smart Classroom</h2>
+
+<div class="card">
+EduSense helps teachers understand student engagement and emotions in real time using AI powered analytics.
+</div>
+
+</section>
+
+<!-- STUDENT DASHBOARD -->
+
+<section id="student">
+
+<nav>
+
+<button onclick="showPage('home')">Home</button>
+<button onclick="showPage('student')">Student</button>
+<button onclick="showPage('teacher')">Teacher</button>
+<button onclick="showPage('ai')">AI</button>
+
+</nav>
+
+<h2>Student Dashboard</h2>
+
+<div class="grid">
+
+<div class="card">
+Engagement Score
+<div class="metric">72%</div>
+</div>
+
+<div class="card">
+Weak Topics
+<ul>
+<li>ER Diagrams</li>
+<li>Normalization</li>
+</ul>
+</div>
+
+<div class="card">
+Recommended Actions
+<ul>
+<li>Review lecture notes</li>
+<li>Practice quiz</li>
+</ul>
+</div>
+
+
+</div>
+
+<div class="card">
+
+<h3>Ask Doubt Anonymously</h3>
+
+<textarea style="width:100%;height:80px"></textarea>
+
+<br><br>
+
+<button>Submit Doubt</button>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<div class="card">
+
+<h3>🙋 Ask feedback Anonymously</h3>
+
+<textarea placeholder="Type your feedback here"></textarea>
+
+<button class="feedback" onclick="submitDoubt()">submit feedback</button>
+
+</div>
+
+</section>
+
+<!-- TEACHER DASHBOARD -->
+
+<section id="teacher">
+
+<nav>
+
+<button onclick="showPage('home')">Home</button>
+<button onclick="showPage('student')">Student</button>
+<button onclick="showPage('teacher')">Teacher</button>
+<button onclick="showPage('ai')">AI</button>
+
+</nav>
+
+<h2>Teacher Dashboard</h2>
+
+<div class="grid">
+
+<div class="card">
+Focused Students
+<div class="metric">60%</div>
+</div>
+
+<div class="card">
+Confused Students
+<div class="metric">25%</div>
+</div>
+
+<div class="card">
+Bored Students
+<div class="metric">15%</div>
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>AI Teaching Suggestions</h3>
+
+<ul>
+<li>Provide real-life example</li>
+<li>Conduct quick quiz</li>
+<li>Slow down explanation</li>
+<li>Use diagrams</li>
+</ul>
+
+</div>
+
+</section>
+
+<!-- AI EMOTION -->
+
+<section id="ai">
+
+<nav>
+
+<button onclick="showPage('home')">Home</button>
+<button onclick="showPage('student')">Student</button>
+<button onclick="showPage('teacher')">Teacher</button>
+<button onclick="showPage('ai')">AI</button>
+
+</nav>
+
+<h2>AI Emotion Detection</h2>
+
+<div class="card">
+
+<h3>📷 AI Classroom Camera</h3>
+
+<video id="video" width="400" autoplay></video>
+
+<br><br>
+
+<button onclick="startDetection()">Start Emotion Detection</button>
+
+<p id="emotionResult" style="font-size:20px;font-weight:bold;"></p>
+
+</div>
+
+</section>
+
+</body>
+
+</html>
